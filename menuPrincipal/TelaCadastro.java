@@ -32,6 +32,8 @@ public class TelaCadastro implements Tela{
 	private JRadioButton rdbtnNormal;
 	private JLabel lblUsuario;
 	private ButtonGroup rdbGroup = new ButtonGroup();
+	
+	
 	/**
 	 * Create the application.
 	 */

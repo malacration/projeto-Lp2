@@ -3,47 +3,41 @@ package menuPrincipal;
 import javax.swing.JFrame;
 import java.awt.Font;
 import javax.swing.JLabel;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.SwingConstants;
 
-import abstracts.TelaMusica;
+import interfaces.Tela;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Stack;
 
 
-public class TelaManipMusic extends TelaMusica{
+public class TelaManipMusic implements Tela{
 
 	/*******************************************************************/
 	/*Declara as variaveis*/
 	private JFrame frame;
-	//private JList<String> listMusica;
 	private JLabel lblAdd;
 	private JLabel lblRemoverTodos;
 	private JLabel lblAddTxt;
 	private JLabel lblRemoverTxt;
 	private JLabel lblRemoverTodosTxt;
 	private JLabel lblRemover;
-	private DefaultListModel<String> modelo;
+	private ListaDeMusicas lista;
 	
 	
 	/**
 	 * Create the application.
 	 */
-	public TelaManipMusic() {
-		super();
+	public TelaManipMusic(ListaDeMusicas lista) {
 		initialize();
-		attLista();
+		this.lista = lista;
+		this.lista.attLista();
 	}
 
 	/**
@@ -56,11 +50,8 @@ public class TelaManipMusic extends TelaMusica{
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		listaMusica.setBounds(10, 11, 374, 330);
-		frame.getContentPane().add(listaMusica);
-		
-		setModelo(new DefaultListModel<String>());
-		listaMusica.setModel(getModelo());
+		lista.getListaMusica().setBounds(10, 11, 374, 330);
+		frame.getContentPane().add(lista.getListaMusica());
 		
 		lblAdd = new JLabel("");
 		lblAdd.setVerticalAlignment(SwingConstants.TOP);
@@ -73,7 +64,7 @@ public class TelaManipMusic extends TelaMusica{
 		lblRemover.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent arg0) {
 				remover();
-				attLista();
+				lista.attLista();
 			}
 		});
 		lblRemover.setVerticalAlignment(SwingConstants.TOP);
@@ -86,7 +77,7 @@ public class TelaManipMusic extends TelaMusica{
 		lblRemoverTodos.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent arg0) {
 				removerTudo();
-				attLista();
+				lista.attLista();
 			}
 		});
 		lblRemoverTodos.setHorizontalAlignment(SwingConstants.LEFT);
@@ -116,7 +107,7 @@ public class TelaManipMusic extends TelaMusica{
 		lblAdd.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent arg0) {
 				add();
-				attLista();
+				lista.attLista();
 			}
 		});
 	}
@@ -129,7 +120,7 @@ public class TelaManipMusic extends TelaMusica{
 	public void add(){
 		JFileChooser chooser = new JFileChooser();
         if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {chooser.getSelectedFile().getAbsolutePath();
-    		getModelo().addElement(chooser.getSelectedFile().getAbsolutePath());
+    		lista.getModelo().addElement(chooser.getSelectedFile().getAbsolutePath());
     		attTxt();
         }
 	}
@@ -145,9 +136,9 @@ public class TelaManipMusic extends TelaMusica{
 		
         Stack<String> pilha = new Stack<String>();
 		
-		for(int i = 0; i < getModelo().getSize(); i++){            	
+		for(int i = 0; i < lista.getModelo().getSize(); i++){            	
 			try{
-				pilha.add(getModelo().getElementAt(i).toString());
+				pilha.add(lista.getModelo().getElementAt(i).toString());
 		    }
 		    catch (ArrayIndexOutOfBoundsException e) {
 		        System.out.println("Erro ao ler musica: " + e.getMessage());
@@ -180,7 +171,7 @@ public class TelaManipMusic extends TelaMusica{
 	 * */
 	public void remover(){
 		try{
-			getModelo().remove(listaMusica.getSelectedIndex());
+			lista.getModelo().remove(lista.getListaMusica().getSelectedIndex());
 			attTxt();
         }
         catch (ArrayIndexOutOfBoundsException e) {
@@ -195,9 +186,9 @@ public class TelaManipMusic extends TelaMusica{
 	 * 
 	 * */
 	public void removerTudo(){
-		while(getModelo().getSize()>0) {
+		while(lista.getModelo().getSize()>0) {
 			try{
-				getModelo().remove(getModelo().getSize()-1);
+				lista.getModelo().remove(lista.getModelo().getSize()-1);
 				attTxt();
 	        }
 	        catch (ArrayIndexOutOfBoundsException e) {
@@ -205,60 +196,8 @@ public class TelaManipMusic extends TelaMusica{
 	            e.printStackTrace();
 	        }
 		}
-	}
-
-	/*******************************************************************/
-	/*getters e setters*/
-	public DefaultListModel<String> getModelo() {return modelo;}
-	public void setModelo(DefaultListModel<String> modelo) {this.modelo = modelo;}
-	
+	}	
 		
-	@SuppressWarnings("unused")
-	public void attLista() {
-		
-		FileReader leitor;
-		BufferedReader cin;
-		
-		/*****************************************************************************/
-		/*Faz a leitura do arquivo e salva tudo na pilha*/
-		try {
-			String texto;
-        	leitor = new FileReader ("musicas.txt");
-        	cin = new BufferedReader (leitor);
-        	
-        	modelo.removeAllElements();
-            while((texto = cin.readLine()) != null) {
-            	modelo.addElement(texto);
-            }
-            
-            cin.close();
-            
-		}
-		/*****************************************************************************/
-		/*Caso o arquivo nao seja localizado, ele é gerado aqui*/
-		catch(FileNotFoundException e) {
-			
-			System.out.println("Erro: Arquivo nao encontrado. " + e.getMessage());
-			e.printStackTrace();
-			
-			FileWriter escritor;
-			PrintWriter anotar;
-			try {
-				
-				escritor = new FileWriter("musicas.txt");
-				anotar = new PrintWriter(escritor);
-				escritor.close();
-				System.out.println("Um novo arquivo foi criado.");
-				
-			} catch (IOException e2) {				
-				e2.printStackTrace();
-			}
-		} catch (IOException e) {
-			System.out.println("Erro: " + e.getMessage());
-			e.printStackTrace();
-		}
-	}
-	
 	public void ativar() {frame.setVisible(true);}
 	public void desativar() {frame.setVisible(false);}
 	

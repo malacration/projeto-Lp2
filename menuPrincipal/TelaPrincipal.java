@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
-import abstracts.TelaMusica;
+import interfaces.Tela;
 import javazoom.jl.player.Player;
 
 import java.awt.Font;
@@ -28,7 +28,7 @@ import java.awt.Toolkit;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-public class TelaPrincipal extends TelaMusica {
+public class TelaPrincipal implements Tela {
 
 	/*****************************************************************************/
 	/*Telas da classe*/
@@ -47,13 +47,13 @@ public class TelaPrincipal extends TelaMusica {
 	private JLabel lblListaDeMusicas;
 	private JMenuItem mntmCadastrarUsuario;
 	private JMenu mnOpcoes;
-	//private JList<String> listaMusica = new JList<String>();
+	
+	private ListaDeMusicas lista = new ListaDeMusicas();
 	
 	/**
 	 * Create the application.
 	 */
 	public TelaPrincipal(TelaManipMusic manipMusic, TelaCadastro telaCadastro) {
-		super();
 		initialize();
 		this.telaMusicas = manipMusic;
 		this.telaCadastro = telaCadastro;
@@ -81,8 +81,8 @@ public class TelaPrincipal extends TelaMusica {
 		frmTocadorDeMusica.getContentPane().add(lblAddMusicImg);
 		
 		
-		listaMusica.setBounds(116, 49, 450, 404);
-		frmTocadorDeMusica.getContentPane().add(listaMusica);
+		//listaMusica.setBounds(116, 49, 450, 404);
+		//frmTocadorDeMusica.getContentPane().add(listaMusica);
 		
 		
 		lblAddMusic.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
@@ -140,7 +140,7 @@ public class TelaPrincipal extends TelaMusica {
 		/*Funcao de click para tocar uma musica*/
 		lblPlay.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				tocarMusica(listaMusica.getSelectedValue().toString());
+				//tocarMusica(listaMusica.getSelectedValue().toString());
 			}
 		});
 		
@@ -235,9 +235,9 @@ public class TelaPrincipal extends TelaMusica {
         	leitor = new FileReader ("musicas.txt");
         	cin = new BufferedReader (leitor);
         	
-        	modelo.removeAllElements();
+        //	modelo.removeAllElements();
             while((texto = cin.readLine()) != null) {
-            	modelo.addElement(texto);
+            	//modelo.addElement(texto);
             }
             
             cin.close();

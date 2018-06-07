@@ -1,10 +1,10 @@
 package core;
 
 import login.TelaLogin;
+import menuPrincipal.ListaDeMusicas;
 import menuPrincipal.TelaCadastro;
 import menuPrincipal.TelaManipMusic;
 import menuPrincipal.TelaPrincipal;
-import observadores.ObservadorListaMusicas;
 
 public class Main {
 
@@ -15,16 +15,13 @@ public class Main {
 		TelaManipMusic manipMusic;
 		TelaPrincipal menuPrincipal;
 		TelaLogin telaLogin;
-		
-		ObservadorListaMusicas observador;
+		ListaDeMusicas lista;
 		
 		try {
-			
+			lista = new ListaDeMusicas();
 			telaCadastro = new TelaCadastro();
-			manipMusic = new TelaManipMusic();
+			manipMusic = new TelaManipMusic(lista);
 			menuPrincipal = new TelaPrincipal(manipMusic,telaCadastro);
-			
-			observador = new ObservadorListaMusicas(menuPrincipal,manipMusic);
 			
 			//telaLogin = new TelaLogin(menuPrincipal);
 			

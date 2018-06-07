@@ -1,58 +1,72 @@
-package abstracts;
+package menuPrincipal;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
-
-
-import interfaces.Tela;
 
 /*****************************************************************************/
 /**
  * Classe abstrata que representa qualquer Tela que faça uso de Jlist com musicas
  * */
-public abstract class TelaMusica implements Tela{
+public class ListaDeMusicas{
 	
-	protected JList<String> listaMusica = new JList<String>();
-	protected DefaultListModel<String> modelo;
+	private JList<String> listaMusica;
+	private DefaultListModel<String> modelo;
 	
 	/*****************************************************************************/
 	/**
 	 * Construtor
 	 * */
-	protected TelaMusica(){
+	public ListaDeMusicas(){
 		listaMusica = new JList<String>();
 		modelo = new DefaultListModel<String>();
 		listaMusica.setModel(modelo);
 	}
 	
+	
+	public JList<String> getListaMusica() {return listaMusica;}
+	public DefaultListModel<String> getModelo() {return modelo;}
+	public void setListaMusica(JList<String> listaMusica) {this.listaMusica = listaMusica;}
+	public void setModelo(DefaultListModel<String> modelo) {this.modelo = modelo;}
+	
 	/*****************************************************************************/
 	/**
 	 * Funcao que atualiza o Jlist baseado no arquivo "musicas.txt"
 	 * */
-	/*
+	
+	@SuppressWarnings("unused")
 	public void attLista() {
 		
 		FileReader leitor;
 		BufferedReader cin;
 		
 		/*****************************************************************************/
-		/*Faz a leitura do arquivo e salva tudo na pilha
+		/*Faz a leitura do arquivo e salva tudo na pilha*/
+		
 		try {
 			String texto;
         	leitor = new FileReader ("musicas.txt");
         	cin = new BufferedReader (leitor);
         	
-        	modelo.removeAllElements();
+        	getModelo().removeAllElements();
             while((texto = cin.readLine()) != null) {
-            	modelo.addElement(texto);
+            	getModelo().addElement(texto);
             }
             
             cin.close();
-            
-		}
+         
+
 		/*****************************************************************************/
-		/*Caso o arquivo nao seja localizado, ele é gerado aqui
-		catch(FileNotFoundException e) {
+		/*
+		 * Caso o arquivo nao seja localizado, ele é gerado aqui
+		 */
+		}catch(FileNotFoundException e) {
 			
 			System.out.println("Erro: Arquivo nao encontrado. " + e.getMessage());
 			e.printStackTrace();
@@ -74,6 +88,6 @@ public abstract class TelaMusica implements Tela{
 			e.printStackTrace();
 		}
 	}
-	*/
+
 	
 }
