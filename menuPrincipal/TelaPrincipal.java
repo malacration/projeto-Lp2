@@ -53,7 +53,8 @@ public class TelaPrincipal implements Tela {
 	/**
 	 * Create the application.
 	 */
-	public TelaPrincipal(TelaManipMusic manipMusic, TelaCadastro telaCadastro) {
+	public TelaPrincipal(TelaManipMusic manipMusic, TelaCadastro telaCadastro, ListaDeMusicas lista) {
+		this.lista = lista;
 		initialize();
 		this.telaMusicas = manipMusic;
 		this.telaCadastro = telaCadastro;
@@ -81,8 +82,8 @@ public class TelaPrincipal implements Tela {
 		frmTocadorDeMusica.getContentPane().add(lblAddMusicImg);
 		
 		
-		//listaMusica.setBounds(116, 49, 450, 404);
-		//frmTocadorDeMusica.getContentPane().add(listaMusica);
+		this.lista.getListaMusica().setBounds(116, 49, 450, 404);
+		frmTocadorDeMusica.getContentPane().add(lista.getListaMusica());
 		
 		
 		lblAddMusic.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));

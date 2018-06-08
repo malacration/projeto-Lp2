@@ -35,9 +35,9 @@ public class TelaManipMusic implements Tela{
 	 * Create the application.
 	 */
 	public TelaManipMusic(ListaDeMusicas lista) {
-		initialize();
 		this.lista = lista;
 		this.lista.attLista();
+		initialize();
 	}
 
 	/**
