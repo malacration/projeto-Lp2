@@ -14,26 +14,13 @@ import javax.swing.JList;
 /**
  * Classe abstrata que representa qualquer Tela que faça uso de Jlist com musicas
  * */
-public class ListaDeMusicas{
+public class ListaDeMusicas extends DefaultListModel<String> {
 	
-	private JList<String> listaMusica;
-	private DefaultListModel<String> modelo;
-	
-	/*****************************************************************************/
-	/**
-	 * Construtor
-	 * */
-	public ListaDeMusicas(){
-		listaMusica = new JList<String>();
-		modelo = new DefaultListModel<String>();
-		listaMusica.setModel(modelo);
+	public void adicionarItem(String item) {
+		this.addElement(item);
 	}
 	
-	
-	public JList<String> getListaMusica() {return listaMusica;}
-	public DefaultListModel<String> getModelo() {return modelo;}
-	public void setListaMusica(JList<String> listaMusica) {this.listaMusica = listaMusica;}
-	public void setModelo(DefaultListModel<String> modelo) {this.modelo = modelo;}
+	public DefaultListModel<String> getModelo() {return this;}
 	
 	/*****************************************************************************/
 	/**

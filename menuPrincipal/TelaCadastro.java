@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.Stack;
 import java.awt.event.ActionEvent;
 
-public class TelaCadastro implements Tela{
+public class TelaCadastro extends JFrame implements Tela{
 
 	private JFrame frame;
 	private JTextField txtUsuario;

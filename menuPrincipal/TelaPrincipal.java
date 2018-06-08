@@ -2,12 +2,13 @@ package menuPrincipal;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
 import interfaces.Tela;
-import javazoom.jl.player.Player;
+//import javazoom.jl.player.Player;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -38,7 +39,7 @@ public class TelaPrincipal implements Tela {
 	
 	/*****************************************************************************/
 	/*Variaveis da classe*/
-	private Player player;
+//	private Player player;
 	private JFrame frmTocadorDeMusica;
 	private JLabel lblPlay;
 	private JLabel lblAddMusic;
@@ -47,6 +48,7 @@ public class TelaPrincipal implements Tela {
 	private JLabel lblListaDeMusicas;
 	private JMenuItem mntmCadastrarUsuario;
 	private JMenu mnOpcoes;
+	private JList<String> jLista;
 	
 	private ListaDeMusicas lista = new ListaDeMusicas();
 	
@@ -81,9 +83,11 @@ public class TelaPrincipal implements Tela {
 		lblAddMusicImg.setBounds(21, 49, 64, 64);
 		frmTocadorDeMusica.getContentPane().add(lblAddMusicImg);
 		
-		
-		this.lista.getListaMusica().setBounds(116, 49, 450, 404);
-		frmTocadorDeMusica.getContentPane().add(lista.getListaMusica());
+		jLista = new JList();
+		jLista = new JList<String>();
+		jLista.setModel(lista.getModelo());
+		jLista.setBounds(116, 49, 450, 404);
+		frmTocadorDeMusica.getContentPane().add(jLista);
 		
 		
 		lblAddMusic.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
@@ -201,9 +205,9 @@ public class TelaPrincipal implements Tela {
 		try{
             FileInputStream stream = new FileInputStream(musica);
             BufferedInputStream buffer = new BufferedInputStream(stream);
-            player = new Player (buffer);
-            System.out.println("Executando...");
-            player.play();
+//            player = new Player (buffer);
+//            System.out.println("Executando...");
+//            player.play();
             System.out.println("Terminado");
         }
         catch (Exception e) {

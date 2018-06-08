@@ -22,12 +22,8 @@ public class Main {
 			telaCadastro = new TelaCadastro();
 			manipMusic = new TelaManipMusic(lista);
 			menuPrincipal = new TelaPrincipal(manipMusic,telaCadastro,lista);
-			
-			//telaLogin = new TelaLogin(menuPrincipal);
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
 }

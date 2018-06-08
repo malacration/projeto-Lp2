@@ -3,6 +3,8 @@ package menuPrincipal;
 import javax.swing.JFrame;
 import java.awt.Font;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.SwingConstants;
@@ -29,6 +31,7 @@ public class TelaManipMusic implements Tela{
 	private JLabel lblRemoverTodosTxt;
 	private JLabel lblRemover;
 	private ListaDeMusicas lista;
+	private JList<String> jLista;
 	
 	
 	/**
@@ -36,10 +39,9 @@ public class TelaManipMusic implements Tela{
 	 */
 	public TelaManipMusic(ListaDeMusicas lista) {
 		this.lista = lista;
-		this.lista.attLista();
 		initialize();
 	}
-
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -50,9 +52,12 @@ public class TelaManipMusic implements Tela{
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		lista.getListaMusica().setBounds(10, 11, 374, 330);
-		frame.getContentPane().add(lista.getListaMusica());
-		
+		jLista = new JList<String>();
+		jLista.setModel(lista);
+		jLista.setBounds(10, 11, 374, 330);
+		frame.getContentPane().add(jLista);
+		this.lista.attLista();
+			
 		lblAdd = new JLabel("");
 		lblAdd.setVerticalAlignment(SwingConstants.TOP);
 		lblAdd.setHorizontalAlignment(SwingConstants.CENTER);
@@ -103,6 +108,13 @@ public class TelaManipMusic implements Tela{
 		lblRemoverTodosTxt.setBounds(281, 406, 103, 14);
 		frame.getContentPane().add(lblRemoverTodosTxt);
 		
+		
+		lblAddTxt.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent arg0) {
+				add();
+				lista.attLista();
+			}
+		});
 		
 		lblAdd.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent arg0) {
@@ -171,7 +183,7 @@ public class TelaManipMusic implements Tela{
 	 * */
 	public void remover(){
 		try{
-			lista.getModelo().remove(lista.getListaMusica().getSelectedIndex());
+			lista.getModelo().remove(jLista.getSelectedIndex());
 			attTxt();
         }
         catch (ArrayIndexOutOfBoundsException e) {
